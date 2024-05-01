@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "scrape": "cd packages/scraper && yarn start",
+    "create-company": "cd packages/data-api && yarn create-company",
+    "update-company-metadata": "cd packages/data-api && yarn update-company-metadata",
+    "check-normalizations": "cd packages/normalizer && yarn check-normalizations",
+    "print-locations-for-test-file": "cd packages/normalizer && yarn print-locations-for-test-file",
+    "refresh-icon-hashes": "cd packages/website && scripts/icon-hashes.js refresh",
+    "generate-icons": "cd packages/website && scripts/icon-generator.js",
+    "lint": "ultra -r lint",
+    "lint:fix": "ultra -r lint:fix",
+    "test": "ultra -r test"  
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.22.0",
+    "prettier": "^2.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "ultra-runner": "^3.10.5"
+  }
+}
