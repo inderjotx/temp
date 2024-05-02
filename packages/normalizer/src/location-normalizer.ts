@@ -14,7 +14,7 @@ import {
 } from "./utils";
 
 function sanitizeNormalizedLocation(normalizedLocation: string[]) {
-  return uniq(normalizedLocation).sort();
+  return uniq(normalizedLocation.filter((x) => x !== undefined || x !== null));
 }
 
 function getNormalizedLocation(job: { location: string, companyId?: string }, companyConfigs: Record<string, any>) {

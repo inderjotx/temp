@@ -17,6 +17,7 @@ import {
   getJobsFromSmartrecruiters,
 } from "./strategies/smartrecruiters-strategy";
 import { Company, Job } from "types";
+import { resolve } from "path";
 
 
 function applyPostScrapingCustomizations(job: Job, companyConfig: Record<string, any>) {
@@ -50,7 +51,6 @@ function dedupe(job: Job, index: number, jobs: Job[]) {
 function setNormalizedLocation(job: Job, companyConfig: Record<string, any>) {
 
   const normalizedLocation = getNormalizedLocation(job, companyConfig);
-  console.log('normalizedLocation', normalizedLocation);
   return {
     ...job,
     normalizedLocation,
@@ -92,7 +92,6 @@ function isRemote(job: Job) {
 
 function sanitizeJob(job: Job) {
 
-
   return {
     ...job,
     department: (job.department || "").trim(),
@@ -103,6 +102,84 @@ function sanitizeJob(job: Job) {
     title: job.title.trim(),
   };
 }
+
+
+
+// prevent funcation from running for more than timeout
+async function withTimeOut<T>(promise: Promise<T>, timeout: number): Promise<T> {
+
+  return new Promise((resolve, reject) => {
+
+    const timeOut = setTimeout(() => {
+      reject(new Error(`Timeout after ${timeout}ms`))
+    }, timeout)
+
+
+    promise.then((result) => {
+      clearTimeout(timeOut);
+      resolve(result);
+    })
+      .catch((error) => {
+        clearTimeout(timeOut);
+        reject(error);
+      })
+
+  })
+
+
+}
+
+
+async function scrapeCompany(company: Company, companyConfig: Record<string, any>) {
+
+  let jobs: Job[] = [];
+  if (company.scrapingStrategy === "greenhouse") {
+    jobs = await getJobsFromGreenhouse(company?.scrapingConfig?.id || "");
+  } else if (company.scrapingStrategy === "lever") {
+
+    jobs = await getJobsFromLever(company?.scrapingConfig?.id || "");
+
+  } else if (company.scrapingStrategy === "workable") {
+
+    jobs = await getJobsFromWorkable(company?.scrapingConfig?.id || "");
+  } else if (company.scrapingStrategy === "recruitee") {
+
+
+    jobs = await getJobsFromRecruitee(company?.scrapingConfig?.id || "");
+  } else if (company.scrapingStrategy === "personio") {
+
+    jobs = await getJobsFromPersonio(
+      company?.scrapingConfig?.version || 0,
+      company?.scrapingConfig?.id || ""
+    );
+
+  } else if (company.scrapingStrategy === "smartrecruiters") {
+
+    jobs = await getJobsFromSmartrecruiters(company?.scrapingConfig?.id || "");
+  } else if (company.scrapingStrategy === "workday") {
+
+    jobs = await getJobsFromWorkday(company?.scrapingConfig?.url || "");
+  } else if (company.scrapingStrategy === "custom") {
+    // @ts-ignore
+    jobs = await companyConfig[company.id].scrapeJobs();
+  }
+
+
+  return jobs;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 function addCompanyId(job: Job, companyId: string) {
 
@@ -133,38 +210,12 @@ export async function scrapeJobs({
       let jobs: Job[] = [];
       let scrapingError;
       try {
-        if (company.scrapingStrategy === "greenhouse") {
-          jobs = await getJobsFromGreenhouse(company?.scrapingConfig?.id || "");
-        } else if (company.scrapingStrategy === "lever") {
 
-          jobs = await getJobsFromLever(company?.scrapingConfig?.id || "");
+        const promise = scrapeCompany(company, companyConfig)
 
-        } else if (company.scrapingStrategy === "workable") {
+        // max fucation will run for 10 seconds
+        jobs = await withTimeOut(promise, 10000);
 
-          jobs = await getJobsFromWorkable(company?.scrapingConfig?.id || "");
-        } else if (company.scrapingStrategy === "recruitee") {
-
-
-          jobs = await getJobsFromRecruitee(company?.scrapingConfig?.id || "");
-        } else if (company.scrapingStrategy === "personio") {
-
-          jobs = await getJobsFromPersonio(
-            company?.scrapingConfig?.version || 0,
-            company?.scrapingConfig?.id || ""
-          );
-
-        } else if (company.scrapingStrategy === "smartrecruiters") {
-
-          jobs = await getJobsFromSmartrecruiters(company?.scrapingConfig?.id || "");
-        } else if (company.scrapingStrategy === "workday") {
-
-          jobs = await getJobsFromWorkday(company?.scrapingConfig?.url || "");
-        } else if (company.scrapingStrategy === "custom") {
-
-
-          // @ts-ignore
-          jobs = await companyConfig[company.id].scrapeJobs();
-        }
       } catch (err) {
         scrapingError = err;
         scrapingErrors[company.id] = err as Error;
