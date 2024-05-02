@@ -12,8 +12,13 @@ interface CommandLineOptions {
   limit?: number;
   skipExisting?: boolean;
   skipWriting?: boolean;
+  waitTime?: number;
 }
 
+
+async function waitFor(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 
 async function fetchCrunchbaseEntity(entityId: string) {
@@ -35,7 +40,7 @@ function parseCrunchbaseEntity(crunchbaseEntity: any) {
   };
 }
 
-const { companyId, limit, skipExisting, skipWriting } = yargs(
+let { companyId, limit, skipExisting, skipWriting, waitTime } = yargs(
   hideBin(process.argv)
 )
   .option("company-id", {
@@ -46,6 +51,12 @@ const { companyId, limit, skipExisting, skipWriting } = yargs(
     type: "number",
     description: "Run only on the first n companies",
   })
+
+  .option("wait-time", {
+    type: "number",
+    description: "Wait time between requests to Crunchbase , to prevent rate limiting",
+  })
+
   .option("skip-existing", {
     type: "boolean",
     description: "Skip companies with existing metadata?",
@@ -66,9 +77,17 @@ const { companyId, limit, skipExisting, skipWriting } = yargs(
       (company) => !company.crunchbaseMeta?.description
     );
   }
+
   if (limit) {
     companies = companies.slice(0, limit);
   }
+
+
+  if (!waitTime) {
+    // wait 3 seconds between requests to Crunchbase
+    waitTime = 3000
+  }
+
   const updatedCompaniesData = [...allCompanies];
   for (const company of companies) {
     const spinner = ora(
@@ -82,6 +101,10 @@ const { companyId, limit, skipExisting, skipWriting } = yargs(
       const crunchbaseEntity = await fetchCrunchbaseEntity(
         company.crunchbaseConfig.id
       );
+
+      console.log(`\n Waiting for ${waitTime} ms...`)
+      await waitFor(waitTime);
+
       if (crunchbaseEntity.error) {
         throw new Error(crunchbaseEntity.error);
       }

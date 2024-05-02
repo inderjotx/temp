@@ -24,8 +24,6 @@ describe('Location Normalization Tests', () => {
     // @ts-ignore
     const normalizedLocation = getNormalizedLocation(job, companyConfigs);
 
-    console.log("input :", job.location)
-    console.log("answer :", normalizedLocation)
 
 
     let isCorrect = true;
