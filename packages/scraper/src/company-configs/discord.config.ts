@@ -1,4 +1,4 @@
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 
 // We need a light variation of the Greenhouse strategy in order to fetch
 // the offices as well, because Discord keeps the "remote" info in the office

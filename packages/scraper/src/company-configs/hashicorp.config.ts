@@ -1,5 +1,5 @@
-import { locationIds } from "@remotebear/data-api";
-import { locationLooselyStartsWith } from "@remotebear/normalizer";
+import { locationIds } from "@tokenjobs/data-api";
+import { locationLooselyStartsWith } from "@tokenjobs/normalizer";
 
 export function getNormalizedLocation({ location }: { location: string }) {
 

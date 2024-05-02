@@ -1,5 +1,5 @@
-import { locationIds } from "@remotebear/data-api";
-import { locationKeywordsLooselyMatch } from "@remotebear/normalizer";
+import { locationIds } from "@tokenjobs/data-api";
+import { locationKeywordsLooselyMatch } from "@tokenjobs/normalizer";
 
 // Digialocean locations often look like this
 // - Remote: U.S. & Canada or Office Locations: Cambridge - MA, New York - NY, Palo Alto - CA

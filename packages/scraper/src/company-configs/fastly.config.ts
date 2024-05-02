@@ -1,6 +1,6 @@
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 
-import { sanitizeLocation, locationKeywordsLooselyMatch } from "@remotebear/normalizer";
+import { sanitizeLocation, locationKeywordsLooselyMatch } from "@tokenjobs/normalizer";
 
 
 // Fastly location is composed of semicolon-separated sub-locations.

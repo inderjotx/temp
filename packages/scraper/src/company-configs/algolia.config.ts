@@ -1,6 +1,6 @@
 import { Job } from "types";
 
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 
 const euLocations = [
   "paris",

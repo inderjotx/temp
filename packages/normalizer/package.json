@@ -1,5 +1,5 @@
 {
-  "name": "@remotebear/normalizer",
+  "name": "@tokenjobs/normalizer",
   "version": "0.0.0",
   "main": "src/index.js",
   "private": true,
@@ -13,9 +13,9 @@
     "test:watch": "jest --testMatch \"**/*.test.js\" --watch"
   },
   "dependencies": {
-    "@remotebear/data-api": "*",
-    "@remotebear/types": "*",
-    "@remotebear/scraper": "*",
+    "@tokenjobs/data-api": "*",
+    "@tokenjobs/types": "*",
+    "@tokenjobs/scraper": "*",
     "yargs": "^16.2.0"
   },
   "devDependencies": {

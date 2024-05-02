@@ -1,4 +1,4 @@
-import locationsData from "@remotebear/data/locations/locations-data.json"
+import locationsData from "@tokenjobs/data/locations/locations-data.json"
 
 export const locationIds = locationsData.reduce((acc, location) => {
   acc[location.id] = location.id;

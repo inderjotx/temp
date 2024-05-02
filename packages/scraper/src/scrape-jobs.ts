@@ -1,11 +1,10 @@
-import { allCompanies } from "@remotebear/data-api";
+import { allCompanies } from "@tokenjobs/data-api";
 import { initialize, evaluatePage, teardown } from "./services/puppeteer";
 import {
   getNormalizedLocation,
   getNormalizedDepartment,
-} from "@remotebear/normalizer";
+} from "@tokenjobs/normalizer";
 
-// @ts-ignore
 import { loadAllConfigs } from "./company-configs";
 import { getJobsFromGreenhouse } from "./strategies/greenhouse-strategy";
 import { getJobsFromLever } from "./strategies/lever-strategy";
@@ -34,7 +33,6 @@ function applyPostScrapingCustomizations(job: Job, companyConfig: Record<string,
 // - have the same location + title + creation date
 function dedupe(job: Job, index: number, jobs: Job[]) {
 
-  console.log('DEDUPE ing -------------------------------------------------------------');
 
   return (
 
@@ -51,17 +49,16 @@ function dedupe(job: Job, index: number, jobs: Job[]) {
 
 function setNormalizedLocation(job: Job, companyConfig: Record<string, any>) {
 
-  console.log('SET NORMALIZED LOCATION -------------------------------------------------');
-
+  const normalizedLocation = getNormalizedLocation(job, companyConfig);
+  console.log('normalizedLocation', normalizedLocation);
   return {
     ...job,
-    normalizedLocation: getNormalizedLocation(job, companyConfig),
+    normalizedLocation,
   };
 }
 
 function setNormalizedDepartment(job: Job) {
 
-  console.log('SET NORMALIZED DEPARTMENT ------------------------------------------------');
 
   return {
     ...job,
@@ -71,7 +68,6 @@ function setNormalizedDepartment(job: Job) {
 
 function isValidJob(job: Job) {
 
-  console.log('IS VALID JOB -------------------------------------------------------------');
 
   if (!job.title || !job.location) {
     return false;
@@ -86,7 +82,6 @@ function isValidJob(job: Job) {
 
 function isRemote(job: Job) {
 
-  console.log('IS REMOTE ----------------------------------------------------------------');
 
   return (
     job.location &&
@@ -97,7 +92,6 @@ function isRemote(job: Job) {
 
 function sanitizeJob(job: Job) {
 
-  console.log('SANITIZE JOB --------------------------------------------------------------');
 
   return {
     ...job,
@@ -112,7 +106,6 @@ function sanitizeJob(job: Job) {
 
 function addCompanyId(job: Job, companyId: string) {
 
-  console.log('ADD COMPANY ID ------------------------------------------------------------');
 
   return {
     ...job,
@@ -141,52 +134,36 @@ export async function scrapeJobs({
       let scrapingError;
       try {
         if (company.scrapingStrategy === "greenhouse") {
-          console.log("Start GreenHouse -------------------------------------------------------------");
           jobs = await getJobsFromGreenhouse(company?.scrapingConfig?.id || "");
-          console.log("End GreenHouse -------------------------------------------------------------");
         } else if (company.scrapingStrategy === "lever") {
 
-          console.log("Start Lever -------------------------------------------------------------");
           jobs = await getJobsFromLever(company?.scrapingConfig?.id || "");
-          console.log("End Lever -------------------------------------------------------------");
 
         } else if (company.scrapingStrategy === "workable") {
 
-          console.log("Start Workable -------------------------------------------------------------");
           jobs = await getJobsFromWorkable(company?.scrapingConfig?.id || "");
-          console.log("End Workable-------------------------------------------------------------");
         } else if (company.scrapingStrategy === "recruitee") {
 
 
-          console.log("Start Recutee -------------------------------------------------------------");
           jobs = await getJobsFromRecruitee(company?.scrapingConfig?.id || "");
-          console.log("End Recutee -------------------------------------------------------------");
         } else if (company.scrapingStrategy === "personio") {
 
-          console.log("Start Persion-------------------------------------------------------------");
           jobs = await getJobsFromPersonio(
             company?.scrapingConfig?.version || 0,
             company?.scrapingConfig?.id || ""
           );
-          console.log("ENd Persion-------------------------------------------------------------");
 
         } else if (company.scrapingStrategy === "smartrecruiters") {
 
-          console.log("Start SmartRecruiters -------------------------------------------------------------");
           jobs = await getJobsFromSmartrecruiters(company?.scrapingConfig?.id || "");
-          console.log("End SmartRecruiters -------------------------------------------------------------");
         } else if (company.scrapingStrategy === "workday") {
 
-          console.log("Start Workday-------------------------------------------------------------");
           jobs = await getJobsFromWorkday(company?.scrapingConfig?.url || "");
-          console.log("End Workday-------------------------------------------------------------");
         } else if (company.scrapingStrategy === "custom") {
 
-          console.log("Start Custom-------------------------------------------------------------");
 
           // @ts-ignore
           jobs = await companyConfig[company.id].scrapeJobs();
-          console.log("End Custom-------------------------------------------------------------");
         }
       } catch (err) {
         scrapingError = err;
@@ -202,7 +179,6 @@ export async function scrapeJobs({
       return jobs;
     });
 
-  console.log('SCRAPING DONE , now resolving promises ---------------------------------------------------------------');
   const scrapedJobs = (await Promise.all(companyJobRunnerPromises))
     .flat()
     .map((job) => applyPostScrapingCustomizations(job, companyConfig))

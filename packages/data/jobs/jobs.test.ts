@@ -2,7 +2,6 @@ import Joi from 'joi'
 
 import jobsData from "./jobs-data.json";
 import companiesData from "../companies/companies-data.json";
-import locationsData from "../locations/locations-data.json";
 import departmentsData from "../departments/departments-data.json";
 
 const schema = Joi.array().items(
@@ -16,9 +15,7 @@ const schema = Joi.array().items(
     location: Joi.string().required(),
     normalizedLocation: Joi.array()
       .optional()
-      .items(
-        Joi.string().valid(...locationsData.map((location) => location.id))
-      ),
+    ,
     normalizedDepartment: Joi.optional().valid(
       ...departmentsData.map((department) => department.id)
     ),

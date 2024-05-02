@@ -1,5 +1,5 @@
 {
-  "name": "@remotebear/data-api",
+  "name": "@tokenjobs/data-api",
   "version": "0.0.0",
   "main": "src/index.js",
   "private": true,
@@ -10,8 +10,8 @@
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
-    "@remotebear/data": "*",
-    "@remotebear/types": "*",
+    "@tokenjobs/data": "*",
+    "@tokenjobs/types": "*",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {

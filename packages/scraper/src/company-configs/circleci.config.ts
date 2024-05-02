@@ -1,5 +1,5 @@
-import { locationIds } from "@remotebear/data-api";
-import { locationLooselyIncludes } from "@remotebear/normalizer";
+import { locationIds } from "@tokenjobs/data-api";
+import { locationLooselyIncludes } from "@tokenjobs/normalizer";
 
 // CircleCI has the remote location between parenthesis or comma-separated in the location
 // E.g.:

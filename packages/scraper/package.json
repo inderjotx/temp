@@ -1,5 +1,5 @@
 {
-  "name": "@remotebear/scraper",
+  "name": "@tokenjobs/scraper",
   "version": "0.0.0",
   "main": "src/index.js",
   "private": true,
@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.5.2",
-    "@remotebear/data-api": "*",
-    "@remotebear/normalizer": "*",
+    "@tokenjobs/data-api": "*",
+    "@tokenjobs/normalizer": "*",
     "chalks": "^0.1.5",
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.1",

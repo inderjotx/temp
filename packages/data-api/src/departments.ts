@@ -1,4 +1,4 @@
-import departmentsData from "@remotebear/data/departments/departments-data.json";
+import departmentsData from "@tokenjobs/data/departments/departments-data.json";
 
 export const departmentIds = departmentsData.reduce((acc, department) => {
   acc[department.id] = department.id;

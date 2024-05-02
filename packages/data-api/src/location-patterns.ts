@@ -1,4 +1,4 @@
-import locationPatternsData from "@remotebear/data/location-patterns/location-patterns-data.json"
+import locationPatternsData from "@tokenjobs/data/location-patterns/location-patterns-data.json"
 
 
 

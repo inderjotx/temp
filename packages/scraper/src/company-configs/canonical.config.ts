@@ -1,6 +1,6 @@
 import { Job } from "types";
 
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 
 // Canonical writes its remote locations this way:
 // - Home based - EMEA

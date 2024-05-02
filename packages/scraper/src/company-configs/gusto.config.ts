@@ -1,4 +1,4 @@
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 
 export const defaultGlobalLocation = locationIds.us;
 

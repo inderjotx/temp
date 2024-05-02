@@ -1,7 +1,7 @@
-import companiesData from "@remotebear/data/companies/companies-data.json";
+import companiesData from "@tokenjobs/data/companies/companies-data.json";
 import fs from "fs";
 import path from "path";
-import { Company } from "@remotebear/types";
+import { Company } from "@tokenjobs/types";
 
 const companiesDataPath = "../../data/companies/companies-data.json";
 

@@ -10,7 +10,7 @@ import {
   buildUpdatedJobs,
   writeTempCompanyJobs,
   writeJobs,
-} from "@remotebear/data-api";
+} from "@tokenjobs/data-api";
 import { Company, Job } from 'types';
 
 
@@ -97,7 +97,6 @@ const prettyPrintJob = (job: Job) => {
   }
   console.log("");
 
-  console.log('BUILDI UPDATE COMPANY METADATA--------------------------------------------');
   const { jobs, addedJobs, removedJobs, skippedJobs } = buildUpdatedJobs({
     previousJobs,
     currentJobs: scrapedJobs,

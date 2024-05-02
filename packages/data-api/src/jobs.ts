@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path"
 import prettier from 'prettier'
-import jobsData from "@remotebear/data/jobs/jobs-data.json"
-import { Job } from "@remotebear/types"
+import jobsData from "@tokenjobs/data/jobs/jobs-data.json"
+import { Job } from "@tokenjobs/types"
 
 
 

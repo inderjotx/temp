@@ -1,4 +1,4 @@
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 
 const usLocations = ["usa", "atlanta", "san francisco"];
 const canadaLocations = ["canada"];

@@ -1,4 +1,4 @@
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 
 // Airtable is US only
 export function getNormalizedLocation() {

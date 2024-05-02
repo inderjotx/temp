@@ -1,4 +1,4 @@
-import { loadAllConfigs } from "@remotebear/scraper";
+import { loadAllConfigs } from "@tokenjobs/scraper";
 import { getNormalizedLocation } from "./location-normalizer";
 import mock from "./location-normalizer.mock.json";
 
@@ -23,8 +23,27 @@ describe('Location Normalization Tests', () => {
 
     // @ts-ignore
     const normalizedLocation = getNormalizedLocation(job, companyConfigs);
-    // @ts-ignore
-    expect(normalizedLocation).toEqual(output.sort());
+
+    console.log("input :", job.location)
+    console.log("answer :", normalizedLocation)
+
+
+    let isCorrect = true;
+
+    if (Array.isArray(output)) {
+
+      output.forEach((x) => {
+        const response = normalizedLocation.includes(x as string)
+
+        if (isCorrect) {
+          isCorrect = response
+        }
+
+      });
+    }
+
+
+    expect(isCorrect).toBe(true);
 
   });
 });

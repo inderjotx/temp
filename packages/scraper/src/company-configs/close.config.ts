@@ -1,4 +1,4 @@
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 import { Job } from "types";
 
 function extractTitle(job: Job) {

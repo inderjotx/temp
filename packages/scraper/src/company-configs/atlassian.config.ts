@@ -1,5 +1,5 @@
-import { locationIds } from "@remotebear/data-api";
-import { locationLooselyIncludes } from "@remotebear/normalizer";
+import { locationIds } from "@tokenjobs/data-api";
+import { locationLooselyIncludes } from "@tokenjobs/normalizer";
 import { Job } from "types";
 
 function extractTitle(job: Job) {

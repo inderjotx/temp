@@ -67,3 +67,33 @@ export function locationLooselyEndsWith(location: string, cases: string | string
   );
 }
 
+
+export function getLocation(location: string, patterns: string | string[]) {
+
+  patterns = typeof patterns === "string" ? [patterns] : patterns;
+  return patterns.map(sanitizeLocation).some((pattern) => sanitizeLocation(location).includes(pattern));
+
+}
+
+
+// wrong us means if  answer   is aUStralia but since australia has us , us is wrongly mathched , samae goes with russia ...etc
+export function remoteWrongUS(arr: string[]) {
+
+
+  let hasUs = false;
+
+  arr.forEach((x) => {
+    if (x !== "us" && x.toLowerCase().includes("us")) {
+      hasUs = true;
+    }
+  })
+
+  if (hasUs) {
+    return arr.filter((x) => x !== "us");
+  }
+
+  else {
+    return arr;
+  }
+
+}

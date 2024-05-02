@@ -1,4 +1,4 @@
-import { locationIds } from "@remotebear/data-api";
+import { locationIds } from "@tokenjobs/data-api";
 
 // E.g.:
 // - Fully remote (UTC-8 to UTC+5.5)

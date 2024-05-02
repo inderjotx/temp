@@ -1,5 +1,5 @@
 
-import { allDepartments } from "@remotebear/data-api/src/departments"
+import { allDepartments } from "@tokenjobs/data-api/src/departments"
 
 export const departmentIds = allDepartments.reduce((acc, department) => {
   acc[department.id] = department.id;

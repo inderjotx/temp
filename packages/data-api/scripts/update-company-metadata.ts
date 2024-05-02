@@ -5,7 +5,7 @@ import chalk from 'chalk'
 import { allCompanies, updateCompany } from "../src/companies";
 import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs/yargs';
-import { Company } from '@remotebear/types';
+import { Company } from '@tokenjobs/types';
 
 interface CommandLineOptions {
   companyId?: string;

@@ -1,6 +1,6 @@
 
 
-import { locationIds, allLocationPatterns } from "@remotebear/data-api";
+import { locationIds, allLocationPatterns } from "@tokenjobs/data-api";
 
 
 import {
@@ -9,6 +9,8 @@ import {
   locationLooselyStartsWith,
   locationLooselyEndsWith,
   locationKeywordsLooselyMatch,
+  getLocation,
+  remoteWrongUS,
 } from "./utils";
 
 function sanitizeNormalizedLocation(normalizedLocation: string[]) {
@@ -28,24 +30,42 @@ function getNormalizedLocation(job: { location: string, companyId?: string }, co
     }
   }
 
+
+
   // Try to get the normalized location based on the location patterns
-  const patternTypesToFuncs = [
-    { type: "match", func: locationLooselyMatches },
-    { type: "starts-with", func: locationLooselyStartsWith },
-    { type: "ends-with", func: locationLooselyEndsWith },
-    { type: "keywords", func: locationKeywordsLooselyMatch },
-  ];
-  for (const { type, func } of patternTypesToFuncs) {
-    const matchedPattern = allLocationPatterns
-      .filter((x) => x.type === type)
-      .find((x) => func(location, x.pattern));
-    if (matchedPattern) {
-      normalizedLocation = sanitizeNormalizedLocation(
-        matchedPattern.locationIds
-      );
-      break;
+  // const patternTypesToFuncs = [
+  //   { type: "match", func: locationLooselyMatches },
+  //   { type: "starts-with", func: locationLooselyStartsWith },
+  //   { type: "ends-with", func: locationLooselyEndsWith },
+  //   { type: "keywords", func: locationKeywordsLooselyMatch },
+  // ];
+  // for (const { type, func } of patternTypesToFuncs) {
+  //   const matchedPattern = allLocationPatterns
+  //     .filter((x) => x.type === type)
+  //     .find((x) => func(location, x.pattern));
+  //   if (matchedPattern) {
+  //     normalizedLocation = sanitizeNormalizedLocation(
+  //       matchedPattern.locationIds
+  //     );
+  //     break;
+  //   }
+  // }
+
+
+  allLocationPatterns.forEach((item) => {
+
+    const doesPatternMatch = getLocation(location, item.pattern);
+
+    if (doesPatternMatch) {
+      normalizedLocation.push(...item.locationIds)
     }
-  }
+
+  })
+
+
+  normalizedLocation = remoteWrongUS(normalizedLocation);
+
+
 
   // If global or not found, default to "companyConfig.defaultGlobalLocation"
   if (

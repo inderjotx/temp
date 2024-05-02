@@ -1,4 +1,4 @@
-import { getTempCompanyJobs } from "@remotebear/data-api";
+import { getTempCompanyJobs } from "@tokenjobs/data-api";
 import yargs from "yargs/yargs";
 import { hideBin } from "yargs/helpers";
 

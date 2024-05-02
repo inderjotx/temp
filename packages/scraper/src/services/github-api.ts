@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import { createPullRequest } from "octokit-plugin-create-pull-request";
-import { getCompany, jobsFilePath, jobsHistoryDir } from "@remotebear/data-api";
+import { getCompany, jobsFilePath, jobsHistoryDir } from "@tokenjobs/data-api";
 import prettier from "prettier";
 import { GITHUB_API_TOKEN, GITHUB_OWNER, GITHUB_REPO } from "../config";
 import { Job } from 'types';

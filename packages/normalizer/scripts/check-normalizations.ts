@@ -1,6 +1,6 @@
 import chalk from "chalk";
-import { allJobs, allCompanies } from "@remotebear/data-api"
-import { validateNormalization, getNormalizedLocation, getNormalizedDepartment } from "@remotebear/normalizer";
+import { allJobs, allCompanies } from "@tokenjobs/data-api"
+import { validateNormalization, getNormalizedLocation, getNormalizedDepartment } from "@tokenjobs/normalizer";
 import { hideBin } from "yargs/helpers";
 
 import yargs from "yargs/yargs";
