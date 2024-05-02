@@ -9,8 +9,6 @@
     "update-company-metadata": "cd packages/data-api && yarn update-company-metadata",
     "check-normalizations": "cd packages/normalizer && yarn check-normalizations",
     "print-locations-for-test-file": "cd packages/normalizer && yarn print-locations-for-test-file",
-    "lint": "ultra -r lint",
-    "lint:fix": "ultra -r lint:fix",
     "test": "ultra -r test",
     "clean": "find packages -type f \\( -name '*.js' -o -name '*.d.ts' \\) -not -path \"*/node_modules/*\" -not -path \"*/jest.setup.js\" -exec rm -f {} +"
   },

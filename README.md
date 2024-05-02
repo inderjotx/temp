@@ -55,20 +55,6 @@ yarn update-company-metadata
 yarn check-normalizations
 ```
 
-## Linting
-
-### Lint the code
-
-```bash
-yarn lint
-```
-
-### Automatically fix linting errors
-
-```bash
-yarn lint:fix
-```
-
 ## Testing
 
 ```bash
